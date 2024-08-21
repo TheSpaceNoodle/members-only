@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import { body } from 'express-validator';
-import { findUserByEmail, findUserByUsername } from '../db/queries/authQueries.js';
+import { createUser, findUserByEmail, findUserByUsername } from '../db/queries/authQueries.js';
+import { handleSecret } from '../utils/index.js';
+import bcrypt from 'bcryptjs';
 
 export const getSignUp = asyncHandler(async (_, res) => {
   res.render('sign-up');
@@ -38,7 +40,13 @@ export const postSignUp = [
     (password_repeat, { req }) => password_repeat === req.body.password,
   ),
   asyncHandler(async (req, res) => {
-    console.log(req.body);
+    const hashedPassword = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync());
+    const user = await createUser({ ...req.body, password: hashedPassword });
+
+    if (req.body.secret) {
+      handleSecret(req.body.secret, user.id);
+    }
+
     res.redirect('/sign-up');
   }),
 ];

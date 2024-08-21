@@ -1,15 +1,15 @@
-import pool from '../db/pool.js';
+import { makeAdmin, makeMember } from '../db/queries/secretQueries.js';
 
 const handleSecret = async (secret, userID) => {
   const isSecret = secret === process.env.SECRET;
   const isAdminSecret = secret === process.env.ADMIN_SECRET;
 
   if (isSecret) {
-    pool.query('UPDATE users SET is_member = true WHERE id = $1', [userID]);
+    await makeMember(userID);
   }
 
   if (isAdminSecret) {
-    pool.query('UPDATE users SET is_admin = true WHERE id = $1', [userID]);
+    await makeAdmin(userID);
   }
 
   return isSecret || isAdminSecret;
