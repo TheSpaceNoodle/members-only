@@ -1,12 +1,13 @@
 import asyncHandler from 'express-async-handler';
 import { body } from 'express-validator';
-import { createUser, findUserByEmail, findUserByUsername } from '../db/queries/authQueries.js';
-import { handleSecret } from '../utils/index.js';
+import { createUser, findUserByEmail, findUserByUsername } from '#src/db/queries/authQueries.js';
+import { handleSecret } from '#src/utils/index.js';
 import bcrypt from 'bcryptjs';
+import passport from 'passport';
 
-export const getSignUp = asyncHandler(async (_, res) => {
+export const getSignUp = (_, res) => {
   res.render('sign-up');
-});
+};
 
 export const postSignUp = [
   body('first_name', "First name can't be empty").trim().escape().notEmpty().escape(),
@@ -47,6 +48,17 @@ export const postSignUp = [
       handleSecret(req.body.secret, user.id);
     }
 
-    res.redirect('/sign-up');
+    res.redirect('/log-in');
   }),
+];
+
+export const getLogIn = (_, res) => {
+  res.render('log-in');
+};
+
+export const postLogIn = [
+  passport.authenticate('local', { failureRedirect: '/log-in' }),
+  (_, res) => {
+    res.redirect('/');
+  },
 ];

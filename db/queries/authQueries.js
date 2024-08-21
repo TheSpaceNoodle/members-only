@@ -1,4 +1,10 @@
-import pool from '../pool.js';
+import pool from '#src/db/pool.js';
+
+export const findUserById = async (id) => {
+  const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+
+  return rows[0];
+};
 
 export const findUserByEmail = async (email) => {
   const { rows } = await pool.query('SELECT username FROM users WHERE email = $1', [email]);

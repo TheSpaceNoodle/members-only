@@ -1,4 +1,4 @@
-import { makeAdmin, makeMember } from '../db/queries/secretQueries.js';
+import { makeAdmin, makeMember } from '#src/db/queries/secretQueries.js';
 
 const handleSecret = async (secret, userID) => {
   const isSecret = secret === process.env.SECRET;

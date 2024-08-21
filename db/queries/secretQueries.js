@@ -1,4 +1,4 @@
-import pool from '../pool.js';
+import pool from '#src/db/pool.js';
 
 export const makeMember = async (userID) =>
   await pool.query('UPDATE users SET is_member = true WHERE id = $1', [userID]);

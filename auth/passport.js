@@ -1,6 +1,6 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import { findUserByUsername } from '../db/queries/authQueries';
+import { findUserById, findUserByUsername } from '#src/db/queries/authQueries.js';
 import bcrypt from 'bcryptjs';
 
 passport.use(
@@ -25,4 +25,15 @@ passport.use(
   }),
 );
 
-export default passport;
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const selectedUser = await findUserById(id);
+    done(null, selectedUser);
+  } catch (err) {
+    done(err);
+  }
+});

@@ -8,6 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
+  "imports": {
+    "#src/*": "./*"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -21,6 +24,7 @@
   "dependencies": {
     "@trivago/prettier-plugin-sort-imports": "^2.0.0",
     "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^9.0.1",
     "ejs": "^3.1.10",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
