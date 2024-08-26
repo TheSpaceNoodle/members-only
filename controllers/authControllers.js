@@ -62,3 +62,15 @@ export const postLogIn = [
     res.redirect('/');
   },
 ];
+
+export const getLogOut = (req, res, next) => {
+  if (req.user) {
+    req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+    });
+  }
+
+  res.redirect('/');
+};

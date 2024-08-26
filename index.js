@@ -8,6 +8,7 @@ import pool from '#src/db/pool.js';
 import { indexRouter, logInRouter, signUpRouter } from '#src/routes/index.js';
 
 import 'dotenv/config';
+import { isAuthenticated } from './middleware/isAuthenticated.js';
 
 const app = express();
 const pgSession = connectPgSimple(session);
@@ -29,6 +30,8 @@ app.use(
 );
 
 app.use(passport.session());
+
+app.use(isAuthenticated);
 
 app.use('/', indexRouter);
 

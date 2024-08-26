@@ -10,7 +10,14 @@
         Welcome to the website! Please <a href="/log-in">log-in</a> or <a href="/sign-up">sign up</a> to send messages
       </h1>
     <% } else { %>
-      <h1>Welcome <%= user.first_name %>!</h1>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Welcome <%= user.first_name %>!</h1>
+
+        <div style="display: flex; gap: 20px; align-items: center;">
+          <a href="/secret">Secret</a>
+          <a href="/log-out">Log out</a>
+        </div>
+      </div>
     <% } %>
 
     <div>messages will be displayed here:</div>
